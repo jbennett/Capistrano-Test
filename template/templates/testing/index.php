@@ -13,6 +13,7 @@
 		</div>
 
 		<jdoc:include type="component" />
+		<div style="clear:both;"></div>
 	</div>
 
 </body>
