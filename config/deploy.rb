@@ -3,6 +3,12 @@ set :stages, %w(staging production)
 set :default_stage, "staging"
 require "capistrano/ext/multistage"
 
+set :application, "Capistrano Test"
+
+# repository info
+set :repository,  "git@github.com:jbennett/Capistrano-Test.git"
+set :scm, :git
+
 # ssh settings
 set :user, "staging"
 set :use_sudo, false
