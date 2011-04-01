@@ -7,9 +7,13 @@
 </head>
 
 <body>
-	<div style="width: 960px; margin: 0 auto;">
+	<div style="width: 960px; margin: 0 auto; background: green;">
+		<div style="width: 300px; float: left;">
+			<jdoc:include type="modules" name="left" style="xhtml" />
+		</div>
+
 		<jdoc:include type="component" />
 	</div>
-	<jdoc:include type="modules" name="left" style="xhtml" />
+
 </body>
 </html>
