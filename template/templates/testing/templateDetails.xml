@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<install version="1.5" type="template">
+	<name>testing</name>
+	<version>1.0.0</version>
+	<creationDate>DATE</creationDate>
+	<author>Jonathan Bennett</author>
+	<authorEmail>jbennett@ccistudios.com</authorEmail>
+	<authorUrl>http://www.ccistudios.com</authorUrl>
+	<copyright>Copyright 2010 - ccistudios.com</copyright>
+	<license>GNU GPLv3</license>
+	<description>
+		<![CDATA[
+		]]>
+    </description>
+
+	<files>
+		<filename>index.php</filename>
+		<filename>offline.php</filename>
+		<filename>params.ini</filename>
+		<folder>css</folder>
+		<folder>html</folder>
+		<folder>images</folder>
+		<folder>js</folder>
+	</files>
+
+	<positions>
+		<position>hidden</position>
+   </positions>
+
+	<params>
+	</params>
+</install>
