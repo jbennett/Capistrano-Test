@@ -1,1 +1,3 @@
 Test Capistrano build
+
+- setup for dev and production with multistage
