@@ -1,27 +1,17 @@
-set :application, "Website"
+# multistage support
+set :stages %w(staging production)
+set :default_stage, "staging"
+require "capistrano/ext/multistage"
 
-set :repository,  "git@github.com:jbennett/Capistrano-Test.git"
-set :scm, :git
-set :branch, "master"
-
-role :app, "ccistaging.com" # This may be the same as your `Web` server
-
+# ssh settings
 set :user, "staging"
 set :use_sudo, false
 
-# directories
-set :deploy_to, "/home/staging/subdomains/cap"
-set :public, "#{deploy_to}/public_html"
-set :extensions, %w[template component]
 
 # Joomla
 set :joomla_url, "http://joomlacode.org/gf/download/frsrelease/13105/57240/Joomla_1.5.22-Stable-Full_Package.zip"
-
-set :joomla_db_name, ""
-set :joomla_db_user, ""
-set :joomla_db_pass, ""
-
-set :joomla_admin_pass, ""
+set :nooku_url, "http://svn2.assembla.com/svn/nooku-framework/trunk/code"
+set :symlinker_url, "https://github.com/jbennett/symlinker/raw/master/link.php"
 
 namespace :deploy do
 
@@ -78,9 +68,26 @@ namespace :deploy do
     end
 
     task :install_default do
+      nooku_install
       # install sh404sef
       # install jce
       # install akeeba
+    end
+
+    task :nooku_install do
+      run <<-cmd
+        mkdir -p #{deploy_to}/shared &&
+        cd #{deploy_to}/shared &&
+        svn checkout -q #{nooku_url} nooku &&
+        ./symlinker ./nooku #{public}
+        cmd
+    end
+
+    task :nooku_update do
+      run <<-cmd
+        cd #{deploy_to}/shared/nooku &&
+        svn update -q
+      cmd
     end
 
     task :cleanup do
@@ -97,7 +104,7 @@ namespace :deploy do
 
       run <<-CMD
         cd #{deploy_to}/shared &&
-        curl -s https://github.com/jbennett/symlinker/raw/master/link.php > symlinker &&
+        curl -s #{symlinker_url} > symlinker &&
         chmod +x symlinker
       CMD
     end
