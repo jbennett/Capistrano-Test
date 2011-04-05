@@ -47,6 +47,7 @@ namespace :deploy do
       db_pass = Capistrano::CLI.ui.ask("Enter MySQL database password: ")
       db_prefix = Capistrano::CLI.ui.ask("Enter Joomla DB prefix: ")
       title   = Capistrano::CLI.ui.ask("Enter Site name: ")
+      admin_pass   = Capistrano::CLI.ui.ask("Enter Admin password: ")
 
       # create config.php
       secret_hash = Digest::SHA1.hexdigest(Time.now.to_s)[0..15]
@@ -58,7 +59,7 @@ namespace :deploy do
       template = ERB.new(File.read('config/templates/joomla.sql.erb'), nil, '<>')
       result = template.result(binding)
       t = <<-sql
-        INSERT INTO #{db_prefix}users values (62, 'Administrator', 'admin', 'dummy@example.com', concat(md5(concat('asdf', '1234')), ':1234'), 'Super Administrator', 0, 1, 25, '0000-00-00', '0000-00-00', '', '');
+        INSERT INTO #{db_prefix}users values (62, 'Administrator', 'admin', 'dummy@example.com', concat(md5(concat('#{admin_pass}', '1234')), ':1234'), 'Super Administrator', 0, 1, 25, '0000-00-00', '0000-00-00', '', '');
         INSERT INTO #{db_prefix}core_acl_aro VALUES(10, 'users', '62', 0, 'Administrator', 0);
         INSERT INTO #{db_prefix}core_acl_groups_aro_map VALUES (25, '', 10);
       sql
